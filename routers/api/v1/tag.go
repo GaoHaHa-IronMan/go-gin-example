@@ -104,7 +104,7 @@ func EditTag(c *gin.Context) {
 			}
 			models.EditTag(id, data)
 		} else {
-			code = e.ERROR_EXIST_TAG
+			code = e.ERROR_NOT_EXIST_TAG
 		}
 
 	}

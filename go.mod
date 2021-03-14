@@ -4,6 +4,7 @@ go 1.14
 
 require (
 	github.com/astaxie/beego v1.12.3
+	github.com/dgrijalva/jwt-go v3.2.0+incompatible // indirect
 	github.com/gin-gonic/gin v1.6.3
 	github.com/go-ini/ini v1.62.0
 	github.com/shiena/ansicolor v0.0.0-20200904210342-c7312218db18 // indirect
