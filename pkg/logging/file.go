@@ -8,7 +8,7 @@ import (
 )
 
 var (
-	LogSavePath = "runtime/logs"
+	LogSavePath = "runtime/logs/"
 	LogSaveName = "log"
 	LogFileExt  = "log"
 	TimeFormat  = "20060102"
@@ -37,7 +37,7 @@ func openLogFile(filePath string) *os.File {
 	}
 
 	handle, err := os.OpenFile(filePath, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
-	if err == nil {
+	if err != nil {
 		log.Fatalf("Fail to OpenFile :%v", err)
 	}
 
