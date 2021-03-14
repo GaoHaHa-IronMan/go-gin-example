@@ -1,7 +1,7 @@
 package routers
 
 import (
-	"fmt"
+	"github.com/GaoHaHa-IronMan/go-gin-example/middleware/jwt"
 	"github.com/GaoHaHa-IronMan/go-gin-example/pkg/setting"
 	v1 "github.com/GaoHaHa-IronMan/go-gin-example/routers/api/v1"
 	"github.com/gin-gonic/gin"
@@ -14,12 +14,10 @@ func InitRouter() *gin.Engine {
 	r.Use(gin.Recovery())
 	gin.SetMode(setting.RunMode)
 
-	r.POST("/post/:id", func(context *gin.Context) {
-		fmt.Println(context.Query("id3"))
-		fmt.Println(context.Param("id"))
-		fmt.Println(context.Params)
-	})
 	apiv1 := r.Group("/api/v1")
+	r.GET("/auth", v1.GetAuth)
+	apiv1.Use(jwt.JWT())
+
 	{
 
 		apiv1.GET("/tags", v1.GetTags)
