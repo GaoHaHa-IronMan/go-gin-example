@@ -1,12 +1,7 @@
 package models
 
-import (
-	"gorm.io/gorm"
-	"time"
-)
-
 type Article struct {
-	Model
+	Model `gorm:"embedded"`
 
 	TagID int `json:"tag_id" gorm:"index"`
 	Tag   Tag `json:"tag"`
@@ -73,14 +68,3 @@ func GetArticleTotal(maps interface{}) int {
 	return int(count)
 }
 
-func (article *Article) BeforeCreate(tx *gorm.DB) error {
-	article.CreatedOn = time.Now().Unix()
-
-	return nil
-}
-
-func (article *Article) BeforeUpdate(tx *gorm.DB) error {
-	article.ModifiedOn = time.Now().Unix()
-
-	return nil
-}

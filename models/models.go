@@ -14,8 +14,8 @@ var db *gorm.DB
 
 type Model struct {
 	ID         int   `gorm:"primary_key" json:"id"`
-	CreatedOn  int64 `json:"created_on"`
-	ModifiedOn int64 `json:"modified_on"`
+	CreatedOn  int64 `gorm:"autoCreateTime" json:"created_on"`
+	ModifiedOn int64 `gorm:"autoUpdateTime" json:"modified_on"`
 }
 
 func init() {
@@ -52,6 +52,9 @@ func init() {
 		log.Fatal(err)
 	}
 
+	//db.Callback().Create().Replace("gorm:update_time_stamp", updateTimeStampForCreateCallback)
+	//db.Callback().Update().Replace("gorm:update_time_stamp", updateTimeStampForUpdateCallback)
+
 	sqlDB, err := db.DB()
 	if err != nil {
 		log.Fatal(err)
@@ -60,6 +63,33 @@ func init() {
 	sqlDB.SetMaxIdleConns(10)
 	sqlDB.SetMaxOpenConns(100)
 }
+
+//func updateTimeStampForCreateCallback(db *gorm.DB) {
+//	if db.Statement.Schema != nil {
+//		nowTime := time.Now().Unix()
+//		if createTimeField, ok := db.Statement.Schema.FieldsByName["CreatedOn"]; ok {
+//
+//			err := createTimeField.Set(db.Statement.ReflectValue, nowTime)
+//			if err != nil {
+//				logging.Error(err)
+//			}
+//		}
+//		if createTimeField, ok := db.Statement.Schema.FieldsByName["ModifiedOn"]; ok {
+//
+//			err := createTimeField.Set(db.Statement.ReflectValue, nowTime)
+//			if err != nil {
+//				logging.Error(err)
+//			}
+//		}
+//	}
+//}
+//
+//func updateTimeStampForUpdateCallback(db *gorm.DB) {
+//
+//	if _, ok := db.Get("gorm:update_column"); !ok {
+//		db.Statement.SetColumn("ModifiedOn", time.Now().Unix())
+//	}
+//}
 
 func CloseDB() {
 	sqlDB, err := db.DB()

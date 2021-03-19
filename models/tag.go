@@ -1,10 +1,5 @@
 package models
 
-import (
-	"gorm.io/gorm"
-	"time"
-)
-
 type Tag struct {
 	Model
 
@@ -14,17 +9,17 @@ type Tag struct {
 	State      int    `json:"state"`
 }
 
-func (tag *Tag) BeforeCreate(tx *gorm.DB) error {
-
-	tag.CreatedOn = time.Now().Unix()
-	return nil
-}
-
-func (tag *Tag) BeforeUpdate(tx *gorm.DB) error {
-	tag.ModifiedOn = time.Now().Unix()
-
-	return nil
-}
+//func (tag *Tag) BeforeCreate(tx *gorm.DB) error {
+//
+//	tag.CreatedOn = time.Now().Unix()
+//	return nil
+//}
+//
+//func (tag *Tag) BeforeUpdate(tx *gorm.DB) error {
+//	tag.ModifiedOn = time.Now().Unix()
+//
+//	return nil
+//}
 
 func GetTags(pageNum int, pageSize int, maps interface{}) (tags []Tag) {
 
